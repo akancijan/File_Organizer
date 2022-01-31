@@ -10,7 +10,7 @@ from os import listdir
 
 
 # Path to your downloads folder
-path_to_download_folder = "C:/Users/aljos/Documents/Testing Folder"
+path_to_trigger_folder = "C:/Users/aljos/Documents/Testing Folder"
 # Path to folder where you want your files sorted
 path_to_sorting_folder = "C:/Users/aljos/Documents/Sorted Downloads"
 
@@ -31,12 +31,12 @@ print(current_day_folder)
 print(current_month_folder)
 print(current_year_folder)
 
-print(path_to_download_folder)
-print(listdir(path_to_download_folder))
+print(path_to_trigger_folder)
+print(listdir(path_to_trigger_folder))
 
 # Tracks any actions that happen in the folder which will trigger file sorting
 class Watcher:
-    DIRECTORY_TO_WATCH = path_to_download_folder
+    DIRECTORY_TO_WATCH = path_to_trigger_folder
 
     def __init__(self):
         self.observer = Observer()
@@ -89,13 +89,8 @@ class Handler(FileSystemEventHandler):
             print("The new DAY directory is created!")
 
         # Iterate over all files and transfer them to current days directory
-        for filename in os.listdir(path_to_download_folder):
-            src_dir = path_to_download_folder + "/" + filename
-
-            while not os.path.exists(src_dir):
-                print('cekam')
-                time.sleep(1)
-
+        for filename in os.listdir(path_to_trigger_folder):
+            src_dir = path_to_trigger_folder + "/" + filename
             new_destination = day_folder_path + "/" + filename
             shutil.move(src_dir, new_destination)
 
